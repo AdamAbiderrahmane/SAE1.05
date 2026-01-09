@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-4 fw-bold">Bienvenue sur mon site de présentation</h1>
+        <p class="lead text-muted">
+            Ce site vous permettra de comprendre comment mes deux logiciels fonctionne pour analyser un fichier tcpdump ou autre types de fichier !
+        </p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-5">
+            <img src="{{ asset('pour_home/mon_visage_anime.webp') }}" class="rounded-circle d-block mx-auto mb-4" alt="Adam" style="width: 150px; height: 150px; object-fit: cover;">
+            
+            <h2 class="text-center h4 mb-4">Découvrez mes projets</h2>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <a href="/portfolio" class="text-decoration-none">
+                        <div class="card h-100 border-2">
+                            <img src="{{ asset('images/pour_home/cible.webp') }}" class="card-img-top" alt="competences">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark">Compétence RT3</h5>
+                                <p class="card-text text-muted small"> Créer des outils et applications informatiques</p>
+                                <span class="badge bg-primary">Compétences</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6">
+                    <a href="/donnees/fichiers" class="text-decoration-none">
+                        <div class="card h-100 border-2">
+                            <img src="{{ asset('images/pour_home/traitement_de_donnees.png') }}" class="card-img-top" alt="SAE 1.05">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark">SAE 1.05</h5>
+                                <p class="card-text text-muted small">Traitement de données réseau</p>
+                                <span class="badge bg-success">Projet</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <h3 class="text-center h5 mb-3">Retrouvez-moi sur</h3>
+            
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="https://www.instagram.com/a.d.m._.69?igsh=MTA5endvNzhnd3U2ZQ==" target="_blank" class="text-decoration-none">
+                    <img src="{{ asset('pour_home/logo_insta_gram.png') }}" alt="Instagram" class="rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover; transition: transform 0.3s;">
+                </a>
+                
+                <a href="https://github.com/AdamAbiderrahmane" target="_blank" class="text-decoration-none">
+                    <img src="{{ asset('pour_home/logo_github.jpg') }}" alt="GitHub" class="rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover; transition: transform 0.3s;">
+                </a>
+                
+                <a href="https://www.linkedin.com/public-profile/settings/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B8qkZF7DaTd25%2FqPeph2t8Q%3D%3D" target="_blank" class="text-decoration-none">
+                    <img src="{{ asset('pour_home/logo_linkedin.png') }}" alt="LinkedIn" class="rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover; transition: transform 0.3s;">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card img:hover {
+        transform: scale(1.05);
+    }
+    
+    .d-flex a img:hover {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %}

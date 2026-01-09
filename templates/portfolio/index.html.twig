@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compétences RT3{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+    
+    <h1 class="display-4 fw-bold text-center mb-2">Compétence RT3</h1>
+    <p class="lead text-center mb-5">Créer des outils et applications informatiques pour les R&T</p>
+
+    <div class="card mb-5 shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Auto-évaluation : Niveau 3/4</h5>
+        </div>
+        <div class="card-body">
+            <div class="progress" style="height: 30px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 75%;">75%</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h4 mb-4">Apprentissages critiques</h2>
+
+    <!-- AC0311 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-info text-white">AC0311 - Utiliser un système informatique</div>
+        <div class="card-body">
+            <p class="mb-0">VSCode, Git/GitHub, Linux, Machines virtuelles</p>
+             <img src="{{ asset('images/Competences/github.png') }}" class="img-fluid rounded shadow-sm" alt="Programmation Python">
+        </div>
+    </div>
+
+    <!-- AC0312 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-info text-white">AC0312 - Lire et modifier un programme</div>
+        <div class="card-body">
+            <p class="mb-3">Python, débogage</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="{{ asset('images/Competences/script_python.png') }}" class="img-fluid rounded shadow-sm" alt="Programmation Python">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AC0313 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-info text-white">AC0313 - Traduire un algorithme</div>
+        <div class="card-body">
+            <p class="mb-0">scripts Python, analyse de données réseau</p>
+            <img src="{{ asset('images/Competences/script_python.png') }}" class="img-fluid rounded shadow-sm" alt="Programmation Python">
+            <img src="{{ asset('images/Competences/CSV_2.png') }}" class="img-fluid rounded shadow-sm" alt="Traitement de donnees">
+        </div>
+    </div>
+
+    <!-- AC0314 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-info text-white">AC0314 - Architecture d'un site Web</div>
+        <div class="card-body">
+            <p class="mb-3">Symfony, HTML, CSS, Bootstrap</p>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <img src="{{ asset('images/Competences/symfony.png') }}" class="img-fluid rounded shadow-sm" alt="Développement Web">
+            </div>
+        </div>
+    </div>
+
+    <!-- AC0315 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-info text-white">AC0315 - Gestion de données</div>
+        <div class="card-body">
+            <p class="mb-0">CSV, Excel, extraction de fichiers texte</p>
+            <img src="{{ asset('images/Competences/CSV_2.png') }}" class="img-fluid rounded shadow-sm" alt="Traitement de donnees">
+        </div>
+    </div>
+
+    <!-- AC0316 -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-info text-white">AC0316 - Travail collaboratif</div>
+        <div class="card-body">
+            <p class="mb-0">GitHub, documentation en anglais, cahier des charges</p>
+            <img src="{{ asset('images/Competences/github.png') }}" class="img-fluid rounded shadow-sm" alt="respect des critères">
+        </div>
+    </div>
+
+    <!-- Analyse réflexive -->
+    <div class="card bg-primary text-white shadow">
+        <div class="card-header"><h5 class="mb-0">Analyse réflexive</h5></div>
+        <div class="card-body">
+            <p>J'ai appris la programmation en Python, le développement web avec Symfony et la gestion de données.</p>
+            <p class="mb-0">Le projet SAE 1.05 m'a appris à transformer un cahier des charges en programme fonctionnel et à documenter mon travail.</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SAE 1.05 - Traitement de données réseau{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    
+    <header class="text-center mb-5">
+        <h1 class="display-3 fw-bold">SAE 1.05 - Traitement de données réseau</h1>
+        <p class="lead text-secondary">Analyse et détection d'activités suspectes</p>
+        <p class="text-muted">ABIDERRAHMANE Adam - RT1B1</p>
+    </header>
+
+    <hr class="border-dark border-2 my-5">
+
+    <section class="mb-5">
+        <h2 class="h3 border-bottom border-2 pb-3 mb-4">Le contexte du projet</h2>
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <p class="mb-3">Une entreprise avec un site en France et un site de production en Inde rencontre des problèmes sur son réseau. L'administrateur réseau a détecté 2 activités suspectes sur le réseau indien mais les vérifications classiques (config des équipements, tests à distance, Wireshark) n'ont rien donné.</p>
+                <p class="mb-0">La mission : analyser un fichier de capture réseau (tcpdump) en Python pour identifier ces activités suspectes et créer un outil automatisé pour faciliter l'analyse future.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="h3 border-bottom border-2 pb-3 mb-4">Ce que j'ai dû faire par étape</h2>
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <ul class="list-unstyled lh-lg">
+                    <li class="mb-2"> 1. Créer un programme Python pour extraire (analyser) les infos importantes du fichier (format txt fin tcpdump)</li>
+                    <li class="mb-2"> 2. Générer une page web (Markdown) avec les résultats (graphique/camembert de données spécifique)</li>
+                    <li class="mb-2"> 3. Exporter les données en CSV pour les traiter dans Excel (VBA)</li>
+                    <li class="mb-2"> 4. Créer des graphiques dans Excel pour visualiser le trafic</li>
+                    <li class="mb-2"> 5. Identifier les 2 activités suspectes</li>
+                    <li class="mb-2"> 6. Rédiger une notice d'utilisation en anglais</li>
+                    <li class="mb-2"> 7. Importer le code sur GitHub</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="h3 border-bottom border-2 pb-3 mb-4">Comment j'ai procédé</h2>
+        
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-primary text-white">
+                <h3 class="h5 mb-0">Étape 1 : Formation sur Python</h3>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">J'ai commencé par faire les TP1 pour apprendre à manipuler des fichiers et extraire des données en Python. J'ai appris à lire des fichiers ligne par ligne, utiliser les expressions régulières et structurer les données.</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-info text-white">
+                <h3 class="h5 mb-0">Étape 2 : Analyse du fichier réseau</h3>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">J'ai analysé le fichier tcpdump pour comprendre sa structure. Chaque ligne contient des infos comme l'horodatage, l'IP source, l'IP destination, le protocole utilisé et la taille des paquets.</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-success text-white">
+                <h3 class="h5 mb-0">Étape 3 : Développement du script Python</h3>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">J'ai codé un programme qui lit le fichier, extrait les données importantes et génère deux sorties : une page web avec les stats principales et un fichier CSV pour Excel.</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-warning">
+                <h3 class="h5 mb-0">Étape 4 : Traitement Excel</h3>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">Avec le CSV généré, j'ai créé des tableaux croisés dynamiques et des graphiques pour visualiser le trafic réseau. Ça m'a permis d'identifier les pics d'activité et les protocoles les plus utilisés.</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-secondary text-white">
+                <h3 class="h5 mb-0">Étape 5 : Interface web Symfony</h3>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">Pour rendre l'outil plus accessible à utiliser et à comprendre surtout, j'ai créé cette interface web avec Symfony me permettant de vous présenter mon projet et le fonctionnement de mes logiciels</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="h3 border-bottom border-2 pb-3 mb-4">Résultats de l'analyse</h2>
+        
+        <div class="card shadow mb-4">
+            <div class="card-header bg-warning">
+                <h3 class="h5 mb-0 fw-bold">Anomalies détectées</h3>
+            </div>
+            <div class="card-body">
+                <img src="{{ asset('images/presentation_projet/anomalies.png') }}" alt="Anomalies détectées" class="img-fluid rounded shadow-sm">
+                <p class="text-muted mt-3 mb-0">Le système a identifié plusieurs anomalies de niveau moyen correspondant à des activités suspectes provenant de sources multiples.</p>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+                <div class="card shadow h-100">
+                    <div class="card-header bg-info text-white">
+                        <h3 class="h5 mb-0 fw-bold">Analyse du trafic</h3>
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ asset('images/presentation_projet/analyse_trafic.png') }}" alt="Analyse du trafic" class="img-fluid rounded shadow-sm">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="card shadow h-100">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="h5 mb-0 fw-bold">Distribution des protocoles</h3>
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ asset('images/presentation_projet/protocoles.png') }}" alt="Distribution des protocoles" class="img-fluid rounded shadow-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="h3 border-bottom border-2 pb-3 mb-4">Ce que j'ai appris</h2>
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <p class="mb-3">Ce projet m'a permis de développer plusieurs compétences :</p>
+                <ul class="list-unstyled lh-lg">
+                    <li class="mb-2">→ Manipulation de fichiers et extraction de données en Python</li>
+                    <li class="mb-2">→ Analyse de trafic réseau et compréhension des protocoles</li>
+                    <li class="mb-2">→ Création de visualisations dans Excel (graphiques, tableaux croisés dynamiques)</li>
+                    <li class="mb-2">→ Développement d'une interface web avec Symfony</li>
+                    <li class="mb-2">→ Utilisation de Git et GitHub pour le versioning</li>
+                    <li class="mb-0">→ Rédaction de documentation technique en anglais</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center mt-5 pt-4 border-top border-2">
+        <p class="text-muted mb-0">SAE 1.05 - Réseaux et Télécommunications - 2026</p>
+    </footer>
+
+</div>
+{% endblock %}

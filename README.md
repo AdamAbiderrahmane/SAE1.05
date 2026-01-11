@@ -299,6 +299,30 @@ For our scenario, the Indian production site was having network issues. Using th
 This was made for SAE 1.05 (Data Processing) in my first year of BUT Networks and Telecommunications at IUT Roanne. The goal was to learn Python, understand network analysis, and create practical tools that real IT teams could use.
 The instructions said our tool needed to work for teams in India who speak English, so everything needed to be clear and simple to understand.
 
+## 📊 Excel Analysis
+
+### How to Use Excel
+
+You can open the CSV file in Excel for manual analysis.
+
+#### Import Steps
+
+1. Open Excel → **Data** → **From Text/CSV**
+2. Select your CSV file
+3. **Important:** Choose **semicolon (;)** as delimiter
+4. Click **Load**
+
+#### Enable VBA Macro (Optional)
+
+- Press `Alt + F11` to open VBA editor
+- Press `Alt + F8` to run the analysis macro
+- Execute the macro for automated formatting
+
+#### What You Can Do
+
+- 🔍 **Filter** data by IP address or protocol
+- 🔢 **Calculate totals** for specific IPs
+
 ## 📫 Contact
 **Author:** Adam Abiderrahmane
 **Program:** BUT Réseaux et Télécommunications - Year 1

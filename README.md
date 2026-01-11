@@ -309,14 +309,23 @@ You can open the CSV file in Excel for manual analysis.
 
 1. Open Excel → **Data** → **From Text/CSV**
 2. Select your CSV file
-3. **Important:** Choose **semicolon (;)** as delimiter
-4. Click **Load**
+   <img width="945" height="501" alt="image" src="https://github.com/user-attachments/assets/b3cdfabf-48b7-47f9-bb1b-a90b317f0aea" />
+   <img width="945" height="502" alt="image" src="https://github.com/user-attachments/assets/33a8e296-d151-46f8-a298-37bb8368cc01" />
+
+4. **Important:** Choose **semicolon (;)** as delimiter
+5. Click **Load**
+<img width="945" height="501" alt="image" src="https://github.com/user-attachments/assets/2b2cec45-c868-4db0-9217-27219d7589d3" />
 
 #### Enable VBA Macro (Optional)
 
 - Press `Alt + F11` to open VBA editor
+<img width="945" height="496" alt="image" src="https://github.com/user-attachments/assets/6bf32815-0703-4e69-88c8-d39641ea60e4" />
+
 - Press `Alt + F8` to run the analysis macro
+<img width="945" height="499" alt="image" src="https://github.com/user-attachments/assets/577d28fa-c40c-44c9-ad98-e125b4b5ec00" />
+
 - Execute the macro for automated formatting
+<img width="945" height="493" alt="image" src="https://github.com/user-attachments/assets/af5c0919-eaa2-4855-8556-45699d5a3040" />
 
 #### What You Can Do
 

@@ -1,0 +1,255 @@
+Sub AnalyserTraficReseau()
+    ' ============================================
+    ' SAÉ 1.05 - GRAPHIQUES et informations fichier tcpdump.txt
+    ' Utilise Python pour créer les images
+    ' ============================================
+
+    Dim ws As Worksheet, wsAnalyse As Worksheet
+    Dim derniereLigne As Long, i As Long, j As Long
+    Dim dictIP As Object, dictOctets As Object, dictPorts As Object
+    Dim dictSYN As Object, dictProtocoles As Object, dictHeures As Object
+    Dim totalPaquets As Long, idx As Long, nbTop As Long
+    Dim anomalies As Collection
+    Dim volumeTotal As Double
+
+    Application.ScreenUpdating = False
+
+    ' Initialiser
+    Set dictIP = CreateObject("Scripting.Dictionary")
+    Set dictOctets = CreateObject("Scripting.Dictionary")
+    Set dictPorts = CreateObject("Scripting.Dictionary")
+    Set dictSYN = CreateObject("Scripting.Dictionary")
+    Set dictProtocoles = CreateObject("Scripting.Dictionary")
+    Set dictHeures = CreateObject("Scripting.Dictionary")
+    Set anomalies = New Collection
+
+    Set ws = ActiveSheet
+
+    ' Supprimer ancienne feuille
+    On Error Resume Next
+    Application.DisplayAlerts = False
+    Worksheets("Analyse Réseau").Delete
+    Application.DisplayAlerts = True
+    On Error GoTo 0
+
+    Set wsAnalyse = Worksheets.Add
+    wsAnalyse.Name = "Analyse Réseau"
+
+    ' ===== ANALYSER =====
+    derniereLigne = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    totalPaquets = derniereLigne - 1
+
+    Dim timestamp As String, protocole As String, ipSource As String
+    Dim portDest As String, flags As String, longueur As String
+    Dim heure As String, octets As Long
+
+    For i = 2 To derniereLigne
+        On Error Resume Next
+        timestamp = CStr(ws.Cells(i, 1).Value)
+        protocole = CStr(ws.Cells(i, 2).Value)
+        ipSource = CStr(ws.Cells(i, 3).Value)
+        portDest = CStr(ws.Cells(i, 6).Value)
+        flags = CStr(ws.Cells(i, 7).Value)
+        longueur = CStr(ws.Cells(i, 11).Value)
+        On Error GoTo 0
+
+        If ipSource = "" Then GoTo Suivant
+        If protocole = "" Then protocole = "IP"
+
+        If Not dictIP.Exists(ipSource) Then
+            dictIP.Add ipSource, 0
+            dictOctets.Add ipSource, 0
+        End If
+        dictIP(ipSource) = dictIP(ipSource) + 1
+
+        octets = 0
+        If IsNumeric(longueur) Then octets = CLng(longueur)
+        dictOctets(ipSource) = dictOctets(ipSource) + octets
+
+        heure = "15"
+        If InStr(timestamp, ":") > 0 Then
+            On Error Resume Next
+            heure = Split(timestamp, ":")(0)
+            On Error GoTo 0
+        End If
+        If Not dictHeures.Exists(heure) Then dictHeures.Add heure, 0
+        dictHeures(heure) = dictHeures(heure) + 1
+
+        If Not dictProtocoles.Exists(protocole) Then dictProtocoles.Add protocole, 0
+        dictProtocoles(protocole) = dictProtocoles(protocole) + 1
+
+        If portDest <> "" And portDest <> "N/A" Then
+            Dim clePort As String
+            clePort = ipSource & "|" & portDest
+            If Not dictPorts.Exists(clePort) Then dictPorts.Add clePort, ipSource
+        End If
+
+        If flags = "S" Then
+            If Not dictSYN.Exists(ipSource) Then dictSYN.Add ipSource, 0
+            dictSYN(ipSource) = dictSYN(ipSource) + 1
+        End If
+
+Suivant:
+    Next i
+
+    ' ===== ANOMALIES =====
+    Dim cle As Variant, anomalie As String
+
+    For Each cle In dictSYN.Keys
+        If dictSYN(cle) > 100 Then anomalies.Add "SYN FLOOD|" & cle & "|" & dictSYN(cle) & "|ELEVEE"
+    Next
+
+    Dim dictNbPorts As Object, ipTemp As String
+    Set dictNbPorts = CreateObject("Scripting.Dictionary")
+    For Each cle In dictPorts.Keys
+        ipTemp = dictPorts(cle)
+        If Not dictNbPorts.Exists(ipTemp) Then dictNbPorts.Add ipTemp, 0
+        dictNbPorts(ipTemp) = dictNbPorts(ipTemp) + 1
+    Next
+
+    For Each cle In dictNbPorts.Keys
+        If dictNbPorts(cle) > 50 Then anomalies.Add "PORT SCAN|" & cle & "|" & dictNbPorts(cle) & "|MOYENNE"
+    Next
+
+    For Each cle In dictIP.Keys
+        If (dictIP(cle) * 100 / totalPaquets) > 40 Then anomalies.Add "FLOOD|" & cle & "|" & dictIP(cle) & "|ELEVEE"
+    Next
+
+    ' ===== TRIER =====
+    Dim arrIP() As Variant
+    ReDim arrIP(1 To dictIP.Count, 1 To 2)
+    idx = 1
+    For Each cle In dictIP.Keys
+        arrIP(idx, 1) = CStr(cle)
+        arrIP(idx, 2) = CLng(dictIP(cle))
+        idx = idx + 1
+    Next
+
+    Dim temp As Variant
+    For i = 1 To dictIP.Count - 1
+        For j = i + 1 To dictIP.Count
+            If arrIP(j, 2) > arrIP(i, 2) Then
+                temp = arrIP(i, 1): arrIP(i, 1) = arrIP(j, 1): arrIP(j, 1) = temp
+                temp = arrIP(i, 2): arrIP(i, 2) = arrIP(j, 2): arrIP(j, 2) = temp
+            End If
+        Next
+    Next
+
+    volumeTotal = 0
+    For Each cle In dictOctets.Keys
+        volumeTotal = volumeTotal + dictOctets(cle)
+    Next
+
+    ' ===== ÉCRIRE TOUTES LES INFOS =====
+
+    wsAnalyse.Cells(1, 1) = "RAPPORT D'ANALYSE RÉSEAU - SAÉ 1.05"
+    wsAnalyse.Cells(1, 1).Font.Bold = True: wsAnalyse.Cells(1, 1).Font.Size = 16
+    wsAnalyse.Cells(2, 1) = "BUT Réseaux & Télécommunications"
+
+    wsAnalyse.Cells(4, 1) = "RÉSUMÉ"
+    wsAnalyse.Cells(4, 1).Font.Bold = True: wsAnalyse.Cells(4, 1).Font.Size = 14
+    If anomalies.Count > 0 Then
+        wsAnalyse.Cells(5, 1) = "⚠️ " & anomalies.Count & " anomalie(s) détectée(s) !"
+        wsAnalyse.Cells(5, 1).Font.Color = RGB(255, 0, 0)
+    Else
+        wsAnalyse.Cells(5, 1) = "✅ Aucune anomalie"
+        wsAnalyse.Cells(5, 1).Font.Color = RGB(0, 150, 0)
+    End If
+
+    wsAnalyse.Cells(7, 1) = "STATISTIQUES GÉNÉRALES"
+    wsAnalyse.Cells(7, 1).Font.Bold = True: wsAnalyse.Cells(7, 1).Font.Size = 14
+    wsAnalyse.Cells(8, 1) = "Total de paquets :"
+    wsAnalyse.Cells(8, 2) = totalPaquets
+    wsAnalyse.Cells(9, 1) = "Volume total :"
+    wsAnalyse.Cells(9, 2) = Round(volumeTotal / 1024, 2) & " Ko"
+    wsAnalyse.Cells(10, 1) = "IP sources :"
+    wsAnalyse.Cells(10, 2) = dictIP.Count
+    wsAnalyse.Cells(11, 1) = "Protocoles :"
+    wsAnalyse.Cells(11, 2) = dictProtocoles.Count
+
+    wsAnalyse.Cells(13, 1) = "TOP 10 IP SOURCES"
+    wsAnalyse.Cells(13, 1).Font.Bold = True: wsAnalyse.Cells(13, 1).Font.Size = 14
+    wsAnalyse.Range("A14:E14") = Array("Rang", "IP", "Paquets", "%", "Volume (Ko)")
+    wsAnalyse.Range("A14:E14").Font.Bold = True
+    wsAnalyse.Range("A14:E14").Interior.Color = RGB(220, 220, 220)
+
+    nbTop = 10
+    If dictIP.Count < 10 Then nbTop = dictIP.Count
+
+    For i = 1 To nbTop
+        wsAnalyse.Cells(14 + i, 1) = i
+        wsAnalyse.Cells(14 + i, 2) = arrIP(i, 1)
+        wsAnalyse.Cells(14 + i, 3) = arrIP(i, 2)
+        wsAnalyse.Cells(14 + i, 4) = Round((arrIP(i, 2) / totalPaquets) * 100, 1) & "%"
+        wsAnalyse.Cells(14 + i, 5) = Round(dictOctets(arrIP(i, 1)) / 1024, 2)
+    Next
+
+    wsAnalyse.Cells(27, 1) = "PROTOCOLES DÉTECTÉS"
+    wsAnalyse.Cells(27, 1).Font.Bold = True: wsAnalyse.Cells(27, 1).Font.Size = 14
+    wsAnalyse.Range("A28:B28") = Array("Protocole", "Paquets")
+    wsAnalyse.Range("A28:B28").Font.Bold = True
+    wsAnalyse.Range("A28:B28").Interior.Color = RGB(220, 220, 220)
+
+    idx = 29
+    For Each cle In dictProtocoles.Keys
+        wsAnalyse.Cells(idx, 1) = cle
+        wsAnalyse.Cells(idx, 2) = dictProtocoles(cle)
+        idx = idx + 1
+    Next
+
+    wsAnalyse.Cells(32, 1) = "⚠️ ANOMALIES DÉTECTÉES"
+    wsAnalyse.Cells(32, 1).Font.Bold = True: wsAnalyse.Cells(32, 1).Font.Size = 14
+    wsAnalyse.Cells(32, 1).Font.Color = RGB(255, 0, 0)
+
+    If anomalies.Count = 0 Then
+        wsAnalyse.Cells(33, 1) = "Aucune anomalie"
+        wsAnalyse.Cells(33, 1).Font.Color = RGB(0, 150, 0)
+    Else
+        wsAnalyse.Range("A33:D33") = Array("Type", "IP", "Nombre", "Gravité")
+        wsAnalyse.Range("A33:D33").Font.Bold = True
+        wsAnalyse.Range("A33:D33").Interior.Color = RGB(220, 220, 220)
+
+        idx = 34
+        For i = 1 To anomalies.Count
+            Dim parts() As String
+            parts = Split(anomalies(i), "|")
+            wsAnalyse.Cells(idx, 1) = parts(0)
+            wsAnalyse.Cells(idx, 2) = parts(1)
+            wsAnalyse.Cells(idx, 3) = parts(2)
+            wsAnalyse.Cells(idx, 4) = parts(3)
+            wsAnalyse.Range(wsAnalyse.Cells(idx, 1), wsAnalyse.Cells(idx, 4)).Interior.Color = RGB(255, 200, 200)
+            idx = idx + 1
+        Next
+    End If
+
+    Dim ligneConclusion As Long
+    ligneConclusion = 38 + anomalies.Count
+    wsAnalyse.Cells(ligneConclusion, 1) = "CONCLUSION"
+    wsAnalyse.Cells(ligneConclusion, 1).Font.Bold = True: wsAnalyse.Cells(ligneConclusion, 1).Font.Size = 14
+    If anomalies.Count > 0 Then
+        wsAnalyse.Cells(ligneConclusion + 1, 1) = "Des anomalies ont été détectées. Mesures de sécurité nécessaires."
+    Else
+        wsAnalyse.Cells(ligneConclusion + 1, 1) = "Trafic normal. Pas d'anomalie."
+    End If
+
+    ' MESSAGE POUR LES GRAPHIQUES
+    wsAnalyse.Cells(ligneConclusion + 3, 1) = "📊 POUR LES GRAPHIQUES :"
+    wsAnalyse.Cells(ligneConclusion + 3, 1).Font.Bold = True
+    wsAnalyse.Cells(ligneConclusion + 3, 1).Font.Size = 12
+    wsAnalyse.Cells(ligneConclusion + 4, 1) = "Exécute le script Python (Extraction_CSV_A_MARKDOWN.py)"
+    wsAnalyse.Cells(ligneConclusion + 5, 1) = "Il créera les 4 graphiques + le camembert dans le dossier resultats_interface/"
+
+    wsAnalyse.Columns("A:E").AutoFit
+
+    Application.ScreenUpdating = True
+
+    wsAnalyse.Activate
+    wsAnalyse.Range("A1").Select
+
+    MsgBox "Analyse terminée !" & vbCrLf & vbCrLf & _
+           "Paquets analysés : " & totalPaquets & vbCrLf & _
+           "Anomalies trouvées : " & anomalies.Count & vbCrLf & vbCrLf & _
+           "POUR LES GRAPHIQUES :" & vbCrLf & _
+           "Lance le script Python qui créera les images !", vbInformation, "Terminé !"
+
+End Sub

@@ -49,6 +49,8 @@ The first script opens a window on your screen. You click a button, choose your 
 -	Special flags (like SYN, ACK)
 -	Packet sizes and sequence numbers
 Then it saves everything into a CSV file with columns separated by semicolons. Super simple.
+<img width="1488" height="866" alt="image" src="https://github.com/user-attachments/assets/efa82753-d930-4b54-af1e-28967bde477d" />
+
 ---------------------------------------------------------------------------------------------
 ## Extraction_CSV_A_MARKDOWN Explained
 The second script reads your CSV file and does the detective work. It looks for three main problems :
@@ -76,14 +78,20 @@ Markdown Report - A text document with:
 - Top 10 most active IP addresses
 - What protocols were used
 - Any suspicious activity found
+<img width="1486" height="871" alt="image" src="https://github.com/user-attachments/assets/c508e4cd-8ab3-462e-96fd-6b1d53b1e416" />
 
 ## 🖼️ Three Images
 
 | Image File | Description |
 |------------|-------------|
 | **anomalies.png** | Shows all the problems detected with severity levels |
+<img width="706" height="607" alt="image" src="https://github.com/user-attachments/assets/7cee89f6-f6bd-40f4-a487-693502770744" />
+
 | **analyse_trafic.png** | Four graphs showing traffic patterns, attack peaks, top IPs, and data volumes |
+<img width="516" height="613" alt="image" src="https://github.com/user-attachments/assets/2172afcb-1c31-44b2-bd06-05336bb651d2" />
+
 | **protocoles.png** | A pie chart of which protocols are being used |
+<img width="597" height="617" alt="image" src="https://github.com/user-attachments/assets/400be61b-8e3c-4938-b6dd-0f4c562e81bc" />
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -163,6 +171,7 @@ resultats_interface/
 - rapport.md - Read this first. It tells you everything.
 - The three PNG images - Look at these to see the graphs.
 - If there are problems, they'll be clearly listed with red or orange warnings.
+<img width="372" height="142" alt="image" src="https://github.com/user-attachments/assets/4b97c530-c4a3-414a-9ea1-7a002153d2ae" />
 
 ##🔍 Understanding the Results
 
@@ -175,10 +184,9 @@ You'll see alerts like:
 ⚠️ SYN FLOOD from IP 192.168.1.50 - High severity - 250 packets
 ⚠️ PORT SCAN from IP 10.0.0.15 - Medium severity - 75 ports
 ```
+<img width="1918" height="962" alt="image" src="https://github.com/user-attachments/assets/db2eb94d-55c0-4d83-808a-c86e1cdc8a74" />
 
 The graphs show you:
-
-## ❗ Common Problems and Fixes
 
 ## 🔍 Understanding the Results
 
@@ -191,7 +199,7 @@ The graphs show you:
 | **Data volumes** | How much data each IP is sending |
 | **Protocol distribution** | What types of traffic you have |
 
-
+## ❗ Common Problems and Fixes
 | 🔴 Problem | ✅ Solution |
 |---------|----------|
 | Script says **"No data found"** | Make sure your text file is actually from tcpdump and has lines with "IP" in them |

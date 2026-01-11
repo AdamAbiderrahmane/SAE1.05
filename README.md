@@ -199,6 +199,7 @@ The graphs show you:
 | **Data volumes** | How much data each IP is sending |
 | **Protocol distribution** | What types of traffic you have |
 
+
 ## ❗ Common Problems and Fixes
 | 🔴 Problem | ✅ Solution |
 |---------|----------|
@@ -207,7 +208,6 @@ The graphs show you:
 | `ModuleNotFoundError: matplotlib` | Run `pip install matplotlib` in your terminal |
 | Images don't show up | Check if the `resultats_interface/` folder was created. If not, the script might have had an error |
 | Window doesn't open | Make sure tkinter is installed (it usually comes with Python automatically) |
-
 
 
 ## 📁 File Structure

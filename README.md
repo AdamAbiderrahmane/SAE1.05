@@ -327,13 +327,19 @@ You can open the CSV file in Excel for manual analysis.
 #### Enable VBA Macro (Optional)
 
 - Press `Alt + F11` to open VBA editor
-<img width="945" height="496" alt="image" src="https://github.com/user-attachments/assets/6bf32815-0703-4e69-88c8-d39641ea60e4" />
+<img width="945" height="362" alt="image" src="https://github.com/user-attachments/assets/e06309bd-4875-4770-a196-ac44b879ef30" />
+<img width="945" height="498" alt="image" src="https://github.com/user-attachments/assets/3dbf0fd7-8f2f-4b33-a73f-6a742f360480" />
+
 
 - Press `Alt + F8` to run the analysis macro
-<img width="945" height="499" alt="image" src="https://github.com/user-attachments/assets/577d28fa-c40c-44c9-ad98-e125b4b5ec00" />
+<img width="945" height="502" alt="image" src="https://github.com/user-attachments/assets/0081424f-f569-4f9e-ae0e-1187298fd0f5" />
+
 
 - Execute the macro for automated formatting
-<img width="945" height="493" alt="image" src="https://github.com/user-attachments/assets/af5c0919-eaa2-4855-8556-45699d5a3040" />
+<img width="945" height="502" alt="image" src="https://github.com/user-attachments/assets/1d3fccc7-ef49-4eea-a212-e3802876efbb" />
+<img width="945" height="502" alt="image" src="https://github.com/user-attachments/assets/91e25b97-be8c-493e-b45b-872145664957" />
+
+
 
 #### What You Can Do
 
